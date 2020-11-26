@@ -19,9 +19,9 @@ export default function Navigation() {
       </Link>
       <span className={s.spacer}> | </span>
       <Link className={s.link} to="/login">
-       登录
+        登录
       </Link>
-      <span className={s.spacer}>or</span>
+      <span className={s.spacer}>|</span>
       <Link className={cx(s.link, s.highlight)} to="/register">
         退出
       </Link>

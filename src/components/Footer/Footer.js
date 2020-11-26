@@ -13,20 +13,20 @@ export default function Footer() {
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <span className={s.text}>© Andy.Liu</span>
-        <span className={s.spacer}>·</span>
+        <span className={s.text}>© Andy</span>
+        <span className={s.spacer}> | </span>
         <Link className={s.link} to="/">
           首页
         </Link>
-        <span className={s.spacer}>·</span>
+        <span className={s.spacer}> | </span>
         <Link className={s.link} to="/admin">
           管理
         </Link>
-        <span className={s.spacer}>·</span>
+        <span className={s.spacer}> | </span>
         <Link className={s.link} to="/privacy">
           隐私
         </Link>
-        <span className={s.spacer}>·</span>
+        <span className={s.spacer}> | </span>
         <Link className={s.link} to="/not-found">
           未找到
         </Link>

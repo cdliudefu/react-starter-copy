@@ -1,7 +1,6 @@
 
-/* eslint-disable global-require */
+/* 路由 */
 
-// The top-level (parent) route
 const routes = {
   path: '',
 
