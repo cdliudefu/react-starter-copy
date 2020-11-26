@@ -14,8 +14,7 @@ import history from './history';
 import { updateMeta } from './DOMUtils';
 import router from './router';
 
-// Enables critical path CSS rendering
-// https://github.com/kriasoft/isomorphic-style-loader
+// 启用关键路径CSS呈现
 const insertCss = (...styles) => {
   // eslint-disable-next-line no-underscore-dangle
   const removeCss = styles.map(x => x._insertCss());
@@ -24,8 +23,7 @@ const insertCss = (...styles) => {
   };
 };
 
-// Global (context) variables that can be easily accessed from any React component
-// https://facebook.github.io/react/docs/context.html
+// 可以从任何React组件轻松访问的全局（上下文）变量
 const context = {
   // Universal HTTP client
   fetch: createFetch(fetch, {
@@ -80,8 +78,7 @@ async function onLocationChange(location, action) {
       container,
       () => {
         if (isInitialRender) {
-          // Switch off the native scroll restoration behavior and handle it manually
-          // https://developers.google.com/web/updates/2015/09/history-api-scroll-restoration
+          // 关闭本机滚动恢复行为并手动处理
           if (window.history && 'scrollRestoration' in window.history) {
             window.history.scrollRestoration = 'manual';
           }
@@ -136,7 +133,7 @@ async function onLocationChange(location, action) {
 
     console.error(error);
 
-    // Do a full page reload if error occurs during client-side navigation
+    // 如果在客户端导航期间发生错误，请重新加载整个页面
     if (!isInitialRender && currentLocation.key === location.key) {
       console.error('RSK will reload your page after error');
       window.location.reload();
@@ -144,16 +141,15 @@ async function onLocationChange(location, action) {
   }
 }
 
-// Handle client-side navigation by using HTML5 History API
-// For more information visit https://github.com/mjackson/history#readme
+// 使用HTML5历史API处理客户端导航
 history.listen(onLocationChange);
 onLocationChange(currentLocation);
 
-// Enable Hot Module Replacement (HMR)
+// 启用热模块更换（HMR）
 if (module.hot) {
   module.hot.accept('./router', () => {
     if (appInstance && appInstance.updater.isMounted(appInstance)) {
-      // Force-update the whole tree, including components that refuse to update
+      // 强制更新整个树，包括拒绝更新的组件
       deepForceUpdate(appInstance);
     }
 

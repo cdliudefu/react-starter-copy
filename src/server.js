@@ -18,7 +18,7 @@ import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import createFetch from './createFetch';
-import passport from './passport';
+// import passport from './passport';
 import router from './router';
 import models from './data/models';
 import schema from './data/schema';
@@ -33,8 +33,7 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 //
-// Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
-// user agent is not known.
+// 告诉任何CSS工具（如materialui）在用户代理未知的情况下使用所有供应商前缀。
 // -----------------------------------------------------------------------------
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'all';
@@ -42,13 +41,13 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 const app = express();
 
 //
-// If you are using proxy from external machine, you can set TRUST_PROXY env
-// Default is to trust proxy headers only from loopback interface.
+// 如果您使用来自外部计算机的代理，则可以设置TRUST_proxy env
+// 默认情况下，只从环回接口信任代理头。
 // -----------------------------------------------------------------------------
 app.set('trust proxy', config.trustProxy);
 
 //
-// Register Node.js middleware
+// 登记中间件
 // -----------------------------------------------------------------------------
 app.use(express.static(path.resolve(__dirname, 'public')));
 app.use(cookieParser());
@@ -56,7 +55,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //
-// Authentication
+// 身份验证
 // -----------------------------------------------------------------------------
 app.use(
   expressJwt({
@@ -65,7 +64,7 @@ app.use(
     getToken: req => req.cookies.id_token,
   }),
 );
-// Error handler for express-jwt
+// express jwt的错误处理程序
 app.use((err, req, res, next) => {
   // eslint-disable-line no-unused-vars
   if (err instanceof Jwt401Error) {
@@ -76,31 +75,11 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
-app.get(
-  '/login/facebook',
-  passport.authenticate('facebook', {
-    scope: ['email', 'user_location'],
-    session: false,
-  }),
-);
-app.get(
-  '/login/facebook/return',
-  passport.authenticate('facebook', {
-    failureRedirect: '/login',
-    session: false,
-  }),
-  (req, res) => {
-    const expiresIn = 60 * 60 * 24 * 180; // 180 days
-    const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
-    res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
-    res.redirect('/');
-  },
-);
 
 //
-// Register API middleware
+// 注册API中间件
 // -----------------------------------------------------------------------------
 app.use(
   '/graphql',
@@ -113,20 +92,20 @@ app.use(
 );
 
 //
-// Register server-side rendering middleware
+// 注册服务器端渲染中间件
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
   try {
     const css = new Set();
 
-    // Enables critical path CSS rendering
+    // 启用关键路径CSS呈现
     // https://github.com/kriasoft/isomorphic-style-loader
     const insertCss = (...styles) => {
       // eslint-disable-next-line no-underscore-dangle
       styles.forEach(style => css.add(style._getCss()));
     };
 
-    // Universal HTTP client
+    // 通用HTTP客户端
     const fetch = createFetch(nodeFetch, {
       baseUrl: config.api.serverUrl,
       cookie: req.headers.cookie,
@@ -134,8 +113,7 @@ app.get('*', async (req, res, next) => {
       graphql,
     });
 
-    // Global (context) variables that can be easily accessed from any React component
-    // https://facebook.github.io/react/docs/context.html
+    // 可以从任何React组件轻松访问的全局（上下文）变量
     const context = {
       fetch,
       // The twins below are wild, be careful!
@@ -184,7 +162,7 @@ app.get('*', async (req, res, next) => {
 });
 
 //
-// Error handling
+// 错误处理
 // -----------------------------------------------------------------------------
 const pe = new PrettyError();
 pe.skipNodeFiles();

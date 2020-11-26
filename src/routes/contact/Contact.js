@@ -10,7 +10,8 @@ export default function Contact({ title }) {
     <div className={s.root}>
       <div className={s.container}>
         <h1>{title}</h1>
-        <p>...</p>
+        <p>联系我们</p>
+        <p>地址：成都市</p>
       </div>
     </div>
   );
