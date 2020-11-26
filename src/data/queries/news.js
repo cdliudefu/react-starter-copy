@@ -4,10 +4,10 @@ import fetch from 'node-fetch';
 import NewsItemType from '../types/NewsItemType';
 import path from 'path';
 
-const url =
-  'https://api.rss2json.com/v1/api.json' +
-  '?rss_url=https%3A%2F%2Freactjsnews.com%2Ffeed.xml';
-  // const url =path.join(__dirname,'../api.json');
+// const url =
+//   'https://api.rss2json.com/v1/api.json' +
+//   '?rss_url=https%3A%2F%2Freactjsnews.com%2Ffeed.xml';
+  const url =path.join(__dirname,'../api.json');
 
 let items = [];
 let lastFetchTask;
@@ -22,7 +22,7 @@ const news = {
 
     if (new Date() - lastFetchTime > 1000 * 60 * 10 /* 10 mins */) {
       lastFetchTime = new Date();
-      lastFetchTask = fetch(url)
+      lastFetchTask = fetch('../api.json')
         .then(response => response.json())
         .then(data => {
           if (data.status === 'ok') {
