@@ -1,10 +1,5 @@
 /**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
+ * 底部导航
  */
 
 import useStyles from 'isomorphic-style-loader/useStyles';
@@ -18,22 +13,22 @@ export default function Footer() {
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <span className={s.text}>© Your Company</span>
+        <span className={s.text}>© Andy.Liu</span>
         <span className={s.spacer}>·</span>
         <Link className={s.link} to="/">
-          Home
+          首页
         </Link>
         <span className={s.spacer}>·</span>
         <Link className={s.link} to="/admin">
-          Admin
+          管理
         </Link>
         <span className={s.spacer}>·</span>
         <Link className={s.link} to="/privacy">
-          Privacy
+          隐私
         </Link>
         <span className={s.spacer}>·</span>
         <Link className={s.link} to="/not-found">
-          Not Found
+          未找到
         </Link>
       </div>
     </div>

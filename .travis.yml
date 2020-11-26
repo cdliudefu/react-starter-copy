@@ -1,3 +1,4 @@
+# 用来描述如何持续构建
 language: node_js
 node_js:
   - 'stable'

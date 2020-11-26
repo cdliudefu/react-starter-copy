@@ -1,10 +1,5 @@
 /**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
+ * 头部
  */
 
 import useStyles from 'isomorphic-style-loader/useStyles';
@@ -29,11 +24,11 @@ export default function Header() {
             height="38"
             alt="React"
           />
-          <span className={s.brandTxt}>Your Company</span>
+          <span className={s.brandTxt}>Andy.Liu</span>
         </Link>
         <div className={s.banner}>
           <h1 className={s.bannerTitle}>React</h1>
-          <p className={s.bannerDesc}>Complex web apps made easy</p>
+          <p className={s.bannerDesc}>一个可以运行的脚手架</p>
         </div>
       </div>
     </div>

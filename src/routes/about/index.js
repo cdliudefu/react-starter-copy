@@ -15,7 +15,7 @@ import about from './about.md';
 function action() {
   return {
     chunks: ['about'],
-    title: about.title,
+    title: '关于我们',
     component: (
       <Layout>
         <Page {...about} />

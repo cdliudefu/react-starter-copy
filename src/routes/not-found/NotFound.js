@@ -1,11 +1,3 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
@@ -19,7 +11,7 @@ export default function NotFound({ title }) {
     <div className={s.root}>
       <div className={s.container}>
         <h1>{title}</h1>
-        <p>Sorry, the page you were trying to view does not exist.</p>
+        <p>抱歉, 未找到该页面.</p>
       </div>
     </div>
   );
