@@ -1,4 +1,3 @@
-
 import fs from 'fs';
 import path from 'path';
 import webpack from 'webpack';
@@ -26,7 +25,7 @@ const staticAssetName = isDebug
   : '[hash:8].[ext]';
 
 //
-// Common configuration chunk to be used for both
+// 客户端和服务的共享的公共配置
 // client-side (client.js) and server-side (server.js) bundles
 // -----------------------------------------------------------------------------
 
@@ -43,19 +42,19 @@ const config = {
     chunkFilename: isDebug
       ? '[name].chunk.js'
       : '[name].[chunkhash:8].chunk.js',
-    // Point sourcemap entries to original disk location (format as URL on Windows)
+    // 将源映射项指向原始磁盘位置 (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
 
   resolve: {
-    // Allow absolute paths in imports, e.g. import Button from 'components/Button'
+    // 允许绝对路径导入, e.g. import Button from 'components/Button'
     // Keep in sync with .flowconfig and .eslintrc
     modules: ['node_modules', 'src'],
   },
 
   module: {
-    // Make missing exports an error instead of warning
+    // 使丢失的导出成为错误而不是警告
     strictExportPresence: true,
 
     rules: [
@@ -65,15 +64,11 @@ const config = {
         include: [SRC_DIR, resolvePath('tools')],
         loader: 'babel-loader',
         options: {
-          // https://github.com/babel/babel-loader#options
+          // 缓存编译
           cacheDirectory: isDebug,
-
-          // https://babeljs.io/docs/usage/options/
           babelrc: false,
           configFile: false,
           presets: [
-            // A Babel preset that can automatically determine the Babel plugins and polyfills
-            // https://github.com/babel/babel-preset-env
             [
               '@babel/preset-env',
               {
@@ -87,24 +82,19 @@ const config = {
               },
             ],
             // Flow
-            // https://github.com/babel/babel/tree/master/packages/babel-preset-flow
             '@babel/preset-flow',
             // JSX
-            // https://github.com/babel/babel/tree/master/packages/babel-preset-react
             ['@babel/preset-react', { development: isDebug }],
           ],
           plugins: [
-            // Experimental ECMAScript proposals
+            // 实验性ECMAScript建议
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-syntax-dynamic-import',
-            // Treat React JSX elements as value types and hoist them to the highest scope
-            // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements
+            // 将React JSX元素视为值类型，并将其提升到最高范围
             ...(isDebug ? [] : ['@babel/transform-react-constant-elements']),
-            // Replaces the React.createElement function with one that is more optimized for production
-            // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-inline-elements
+            // 替换React.createElement功能与一个更优化的生产
             ...(isDebug ? [] : ['@babel/transform-react-inline-elements']),
-            // Remove unnecessary React propTypes from the production build
-            // https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types
+            // 从生产生成中删除不必要的React propTypes
             ...(isDebug ? [] : ['transform-react-remove-prop-types']),
           ],
         },
@@ -157,7 +147,6 @@ const config = {
           },
 
           // Compile Less to CSS
-          // https://github.com/webpack-contrib/less-loader
           // Install dependencies before uncommenting: yarn add --dev less-loader less
           // {
           //   test: /\.less$/,
@@ -165,7 +154,6 @@ const config = {
           // },
 
           // Compile Sass to CSS
-          // https://github.com/webpack-contrib/sass-loader
           // Install dependencies before uncommenting: yarn add --dev sass-loader node-sass
           // {
           //   test: /\.(scss|sass)$/,
@@ -255,7 +243,6 @@ const config = {
   cache: isDebug,
 
   // Specify what bundle information gets displayed
-  // https://webpack.js.org/configuration/stats/
   stats: {
     cached: isVerbose,
     cachedAssets: isVerbose,
@@ -270,7 +257,6 @@ const config = {
   },
 
   // Choose a developer tool to enhance debugging
-  // https://webpack.js.org/configuration/devtool/#devtool
   devtool: isDebug ? 'cheap-module-inline-source-map' : 'source-map',
 };
 
@@ -290,14 +276,12 @@ const clientConfig = {
 
   plugins: [
     // Define free variables
-    // https://webpack.js.org/plugins/define-plugin/
     new webpack.DefinePlugin({
       'process.env.BROWSER': true,
       __DEV__: isDebug,
     }),
 
     // Emit a file with assets paths
-    // https://github.com/webdeveric/webpack-assets-manifest#options
     new WebpackAssetsManifest({
       output: `${BUILD_DIR}/asset-manifest.json`,
       publicPath: true,
@@ -338,7 +322,6 @@ const clientConfig = {
       ? []
       : [
           // Webpack Bundle Analyzer
-          // https://github.com/th0r/webpack-bundle-analyzer
           ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
         ]),
   ],
@@ -358,8 +341,6 @@ const clientConfig = {
 
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
-  // https://webpack.js.org/configuration/node/
-  // https://github.com/webpack/node-libs-browser/tree/master/mock
   node: {
     fs: 'empty',
     net: 'empty',
@@ -390,7 +371,6 @@ const serverConfig = {
   },
 
   // Webpack mutates resolve object, so clone it to avoid issues
-  // https://github.com/webpack/webpack/issues/4817
   resolve: {
     ...config.resolve,
   },
@@ -453,14 +433,12 @@ const serverConfig = {
 
   plugins: [
     // Define free variables
-    // https://webpack.js.org/plugins/define-plugin/
     new webpack.DefinePlugin({
       'process.env.BROWSER': false,
       __DEV__: isDebug,
     }),
 
     // Adds a banner to the top of each generated chunk
-    // https://webpack.js.org/plugins/banner-plugin/
     new webpack.BannerPlugin({
       banner: 'require("source-map-support").install();',
       raw: true,
@@ -469,7 +447,6 @@ const serverConfig = {
   ],
 
   // Do not replace node globals with polyfills
-  // https://webpack.js.org/configuration/node/
   node: {
     console: false,
     global: false,

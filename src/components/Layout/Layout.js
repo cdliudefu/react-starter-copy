@@ -5,7 +5,7 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// external-global styles must be imported in your JS.
+// 必须在JS中导入外部全局样式。
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
 import Header from '../Header';

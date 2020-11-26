@@ -207,7 +207,7 @@ app.use((err, req, res, next) => {
 });
 
 //
-// Launch the server
+// 启动服务器
 // -----------------------------------------------------------------------------
 const promise = models.sync().catch(err => console.error(err.stack));
 if (!module.hot) {
@@ -219,7 +219,7 @@ if (!module.hot) {
 }
 
 //
-// Hot Module Replacement
+// 热模块更换
 // -----------------------------------------------------------------------------
 if (module.hot) {
   app.hot = module.hot;

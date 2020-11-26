@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import Register from './Register';
 
-const title = 'New User Registration';
+const title = '注册';
 
 function action() {
   return {

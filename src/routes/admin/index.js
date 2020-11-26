@@ -1,9 +1,8 @@
-
 import React from 'react';
 import Layout from '../../components/Layout';
 import Admin from './Admin';
 
-const title = 'Admin Page';
+const title = '管理页面';
 const isAdmin = false;
 
 function action() {

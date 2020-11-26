@@ -1,4 +1,3 @@
-
 /* 路由 */
 
 const routes = {
@@ -35,7 +34,7 @@ const routes = {
       load: () => import(/* webpackChunkName: 'admin' */ './admin'),
     },
 
-    // Wildcard routes, e.g. { path: '(.*)', ... } (must go last)
+    // 通配符路由, e.g. { path: '(.*)', ... }
     {
       path: '(.*)',
       load: () => import(/* webpackChunkName: 'not-found' */ './not-found'),
@@ -43,18 +42,18 @@ const routes = {
   ],
 
   async action({ next }) {
-    // Execute each child route until one of them return the result
+    // 执行每个子路由，直到其中一个返回结果
     const route = await next();
 
-    // Provide default values for title, description etc.
-    route.title = `${route.title || 'Untitled Page'} - www.reactstarterkit.com`;
+    // 提供标题和默认描述.
+    route.title = `${route.title || 'Untitled Page'} - 欢迎光临`;
     route.description = route.description || '';
 
     return route;
   },
 };
 
-// The error page is available by permanent url for development mode
+// 错误页可通过开发模式的永久url访问
 if (__DEV__) {
   routes.children.unshift({
     path: '/error',

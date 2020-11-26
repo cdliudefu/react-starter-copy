@@ -10,15 +10,15 @@ export default function Page({ title, html }) {
     <div className={s.root}>
       <div className={s.container}>
         <h1>{title}</h1>
-        {/* <div
+        <div
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: html }}
-        /> */}
-        <ul>
+        />
+        {/* <ul>
           <li>test1</li>
           <li>test1</li>
           <li>test1</li>
-        </ul>
+        </ul> */}
       </div>
     </div>
   );
