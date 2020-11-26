@@ -2,11 +2,12 @@
 import { GraphQLList as List } from 'graphql';
 import fetch from 'node-fetch';
 import NewsItemType from '../types/NewsItemType';
+import path from 'path';
 
-// React.js News Feed (RSS)
 const url =
   'https://api.rss2json.com/v1/api.json' +
   '?rss_url=https%3A%2F%2Freactjsnews.com%2Ffeed.xml';
+  // const url =path.join(__dirname,'../api.json');
 
 let items = [];
 let lastFetchTask;
